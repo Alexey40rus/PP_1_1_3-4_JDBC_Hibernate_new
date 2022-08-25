@@ -29,7 +29,7 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 // Удаление таблицы User(ов)
     public void dropUsersTable() {
-        String dropUsers = "DROP TABLE IF EXISTS users";
+        String dropUsers = "DROP TABLE IF EXISTS Users";
         try (PreparedStatement prs = connection.prepareStatement(dropUsers)) {
             prs.execute();
         } catch (SQLException e) {
@@ -38,7 +38,7 @@ public class UserDaoJDBCImpl implements UserDao {
     }
     // Добавление User в таблицу
     public void saveUser(String name, String lastName, byte age) {
-        String saveUser = "INSERT INTO User (name, lastname, age) VALUES (1, ?, ?, ?)";
+        String saveUser = "INSERT INTO Users (name, lastname, age) VALUES (?, ?, ?)";
         try (PreparedStatement prs = connection.prepareStatement(saveUser)) {
             prs.setString(1, name);
             prs.setString(2, lastName);
@@ -50,7 +50,7 @@ public class UserDaoJDBCImpl implements UserDao {
     }
    // Удаление User из табицы (по id
     public void removeUserById(long id) {
-        String removeUser = "DELETE FROM user WHERE Id = ?";
+        String removeUser = "DELETE FROM users WHERE Id = ?";
         try (PreparedStatement prs = connection.prepareStatement(removeUser)) {
             prs.setLong(1, id);
             prs.execute();
@@ -60,8 +60,8 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 // Получение всех User(ов) из таблицы
     public List<User> getAllUsers() {
-        List<User> list = new ArrayList<>();
-        String sql = "SELECT * FROM User";
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT * FROM Users";
         try (Statement st = connection.createStatement()) {
             ResultSet resultSet = st.executeQuery(sql);
 
@@ -71,12 +71,12 @@ public class UserDaoJDBCImpl implements UserDao {
                 user.setName(resultSet.getString("name"));
                 user.setLastName(resultSet.getString("lastname"));
                 user.setAge(resultSet.getByte("age"));
-                list.add(user);
+                users.add(user);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return list;
+        return users;
     }
 // Очистка содержания таблицы
     public void cleanUsersTable() {
