@@ -1,9 +1,6 @@
 package jm.task.core.jdbc.util;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class Util {
 
@@ -13,7 +10,6 @@ public class Util {
 
     public static Connection getConnection() {
         Connection connection = null;
-
         try {
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
         } catch (SQLException e) {
