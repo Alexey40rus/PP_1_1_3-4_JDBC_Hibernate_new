@@ -34,7 +34,7 @@ public class UserDaoJDBCImpl implements UserDao {
             e.printStackTrace();
         }
     }
-// Удаление таблицы User(ов)
+    // Удаление таблицы User(ов)
     public void dropUsersTable() {
         String dropUsers = "DROP TABLE IF EXISTS Users";
         try (PreparedStatement prs = connection.prepareStatement(dropUsers)) {
@@ -70,7 +70,7 @@ public class UserDaoJDBCImpl implements UserDao {
             e.printStackTrace();
         }
     }
-   // Удаление User из табицы (по id
+    // Удаление User из табицы (по id
     public void removeUserById(long id) {
         String removeUser = "DELETE FROM users WHERE Id = ?";
         try (PreparedStatement prs = connection.prepareStatement(removeUser)) {
@@ -87,7 +87,7 @@ public class UserDaoJDBCImpl implements UserDao {
             e.printStackTrace();
         }
     }
-// Получение всех User(ов) из таблицы
+    // Получение всех User(ов) из таблицы
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
         String sql = "SELECT * FROM Users";
@@ -114,7 +114,7 @@ public class UserDaoJDBCImpl implements UserDao {
         }
         return users;
     }
-// Очистка содержания таблицы
+    // Очистка содержания таблицы
     public void cleanUsersTable() {
         String clean ="TRUNCATE TABLE users";
         try (PreparedStatement prs = connection.prepareStatement(clean)) {
