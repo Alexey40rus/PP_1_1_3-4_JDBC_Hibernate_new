@@ -8,9 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoHibernateImpl implements UserDao {
-    private static final String createUser =  "CREATE TABLE IF NOT EXISTS users("
-            + "id LONG, " + "name VARCHAR(100) NOT NULL, "
-            + "lastName VARCHAR(100) NOT NULL," + "age INT)";
+    private static final String createUsers =  "CREATE TABLE IF NOT EXISTS users" +
+            "(id BIGINT NOT NULL AUTO_INCREMENT, name VARCHAR(100) NOT NULL, " +
+            "lastName VARCHAR(100) NULL, age INT(3) NOT NULL, PRIMARY KEY (id))";
+
     private static final String dropUsers = "DROP TABLE IF EXISTS users";
     private static final  String clean ="TRUNCATE TABLE users";
     private Transaction transaction = null;
@@ -24,7 +25,7 @@ public class UserDaoHibernateImpl implements UserDao {
     public void createUsersTable() {
         try (Session session = Util.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            session.createSQLQuery(createUser).executeUpdate();
+            session.createSQLQuery(createUsers).executeUpdate();
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
