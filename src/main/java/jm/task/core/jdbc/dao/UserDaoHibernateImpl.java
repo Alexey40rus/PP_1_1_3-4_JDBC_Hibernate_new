@@ -13,7 +13,6 @@ public class UserDaoHibernateImpl implements UserDao {
             "lastName VARCHAR(100) NULL, age INT(3) NOT NULL, PRIMARY KEY (id))";
 
     private static final String dropUsers = "DROP TABLE IF EXISTS users";
-    private static final  String clean ="TRUNCATE TABLE users";
     private Transaction transaction = null;
 
     public UserDaoHibernateImpl() {
@@ -27,6 +26,7 @@ public class UserDaoHibernateImpl implements UserDao {
             transaction = session.beginTransaction();
             session.createSQLQuery(createUsers).executeUpdate();
             transaction.commit();
+            session.close();
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
@@ -86,7 +86,7 @@ public class UserDaoHibernateImpl implements UserDao {
         List<User> list = new ArrayList<>();
         try (Session session = Util.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            list = session.createQuery("from User").getResultList();
+            list = session.createQuery("from User", User.class).getResultList();
                 transaction.commit();
         } catch (Exception e) {
             if(transaction != null) {
@@ -100,7 +100,7 @@ public class UserDaoHibernateImpl implements UserDao {
     public void cleanUsersTable() {
         try (Session session = Util.getSessionFactory().openSession()){
             transaction = session.beginTransaction();
-            session.createSQLQuery(clean).executeUpdate();
+            session.createQuery("delete User").executeUpdate();
             transaction.commit();
         } catch (Exception e){
             if(transaction != null) {
