@@ -17,15 +17,12 @@ public class UserDaoHibernateImpl implements UserDao {
     private Transaction transaction = null;
 
     public UserDaoHibernateImpl() {
-
     }
-
     @Override
     public void createUsersTable() {
         try (Session session = Util.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
             session.createSQLQuery(createUsers).executeUpdate();
-
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
